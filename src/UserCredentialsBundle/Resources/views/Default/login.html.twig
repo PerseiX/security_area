@@ -1,0 +1,14 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <a href="{{ path("logout") }}">Wyloguj</a>
+    <form action="{{ path('login') }}" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="_username" />
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="_password" />
+
+        <button type="submit">login</button>
+    </form>
+{% endblock %}

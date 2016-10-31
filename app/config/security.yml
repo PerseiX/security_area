@@ -1,0 +1,35 @@
+security:
+    providers:
+        user_entity_provider:
+            entity:
+                class: UserCredentialsBundle:User
+                property: _username
+
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        default:
+            logout:       true
+            pattern:    ^/
+            anonymous: ~
+            http_basic: ~
+            provider: user_entity_provider
+            logout:
+                path:   /logout
+                target: /
+                invalidate_session: true
+            form_login:
+                login_path: login
+                check_path: login
+
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_ADMIN }
+
+
+    encoders:
+           UserCredentialsBundle\Entity\User:
+             algorithm: bcrypt

@@ -1,10 +1,7 @@
 security:
     providers:
-        user_entity_provider:
-            entity:
-                class: UserCredentialsBundle:User
-                property: _username
-
+        custom_user_provider:
+            id: app.security.custom_user_provider
 
     firewalls:
         dev:
@@ -16,7 +13,7 @@ security:
             pattern:    ^/
             anonymous: ~
             http_basic: ~
-            provider: user_entity_provider
+            provider: custom_user_provider
             logout:
                 path:   /logout
                 target: /

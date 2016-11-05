@@ -39,7 +39,7 @@ class UserProvider implements UserProviderInterface
     public function loadUserByUsername($username)
     {
         /** @var User */
-        $user = $this->om->getRepository('UserCredentialsBundle:User')->findOneBy(['username' => $username]);
+        $user = $this->om->getRepository('UserCredentialsBundle:User')->findOneBy(['_username' => $username]);
 
         if ($user) {
             return $user;

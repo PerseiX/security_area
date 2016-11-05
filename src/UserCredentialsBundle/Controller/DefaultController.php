@@ -19,12 +19,8 @@ class DefaultController extends Controller
     /**
      * @Route("/login", name="login")
      */
-    public function loginAction(Request $request)
+    public function loginAction()
     {
-        $authenticationUtils = $this->get('security.authentication_utils');
-var_dump($this->getUser());
-        var_dump($authenticationUtils->getLastAuthenticationError());
-//        var_dump($this->getDoctrine()->getRepository("UserCredentialsBundle:User")->loadUserByUsername($request->get('username')));
         return $this->render('UserCredentialsBundle:Default:login.html.twig');
     }
 }

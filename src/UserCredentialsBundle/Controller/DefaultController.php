@@ -13,6 +13,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+        var_dump($this->getUser());
         return $this->render('UserCredentialsBundle:Default:index.html.twig');
     }
 

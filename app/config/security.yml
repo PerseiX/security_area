@@ -8,19 +8,11 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        default:
-            logout:       true
-            pattern:    ^/
-            anonymous: ~
-            http_basic: ~
-            provider: custom_user_provider
-            logout:
-                path:   /logout
-                target: /
-                invalidate_session: true
-            form_login:
-                login_path: login
-                check_path: login
+        custom_secured:
+                pattern:   ^/
+                stateless: true
+                custom:      true
+
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

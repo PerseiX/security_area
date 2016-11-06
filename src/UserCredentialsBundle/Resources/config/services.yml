@@ -2,3 +2,15 @@ services:
     app.security.custom_user_provider:
         class: UserCredentialsBundle\Security\Provider\UserProvider
         arguments: ['@doctrine.orm.entity_manager']
+
+    custom.security.authentication.provider:
+        class: UserCredentialsBundle\Security\Authentication\Provider\CustomAuthenticationProvider
+        arguments:
+            - '@app.security.custom_user_provider'
+            - '@cache.app'
+        public: false
+
+    custom.security.authentication.listener:
+        class: UserCredentialsBundle\Security\Firewall\CustomAuthenticationListener
+        arguments: ['@security.token_storage', '@security.authentication.manager']
+        public: false

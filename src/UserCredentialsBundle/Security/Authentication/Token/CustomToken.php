@@ -10,10 +10,19 @@ namespace UserCredentialsBundle\Security\Authentication\Token;
 
 
 use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class CustomToken extends AbstractToken
 {
+    /**
+     * @var DateTime
+     */
     private $createdAt;
+
+    /**
+     * @var DateTime
+     */
+    private $expirationDate;
 
     /**
      * CustomToken constructor.
@@ -35,7 +44,7 @@ class CustomToken extends AbstractToken
     }
 
     /**
-     * @return mixed
+     * @return DateTime
      */
     public function getCreatedAt()
     {
@@ -43,10 +52,30 @@ class CustomToken extends AbstractToken
     }
 
     /**
-     * @param mixed $createdAt
+     * @param $createdAt
+     * @return $this
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+        return $this;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getExpirationDate()
+    {
+        return $this->expirationDate;
+    }
+
+    /**
+     * @param $expirationDate
+     * @return $this
+     */
+    public function setExpirationDate($expirationDate)
+    {
+        $this->expirationDate = $expirationDate;
+        return $this;
     }
 }

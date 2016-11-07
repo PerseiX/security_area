@@ -45,6 +45,7 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(name="token", type="string", length=128, nullable=false)
      */
     private $token;
+
     /**
      * @ORM\Column(name="password", type="string", length=64)
      */
@@ -194,11 +195,13 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param mixed $isActive
+     * @param $isActive
+     * @return $this
      */
     public function setIsActive($isActive)
     {
         $this->isActive = $isActive;
+        return $this;
     }
 
     /**
@@ -210,10 +213,30 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param mixed $email
+     * @param $email
+     * @return $this
      */
     public function setEmail($email)
     {
         $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param $token
+     * @return $this
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+        return $this;
     }
 }

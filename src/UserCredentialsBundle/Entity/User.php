@@ -41,7 +41,10 @@ class User implements UserInterface, \Serializable
      */
     private $email;
 
-
+    /**
+     * @ORM\Column(name="token", type="string", length=128, nullable=false)
+     */
+    private $token;
     /**
      * @ORM\Column(name="password", type="string", length=64)
      */

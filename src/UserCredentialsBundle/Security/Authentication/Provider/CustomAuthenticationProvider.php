@@ -16,6 +16,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use UserCredentialsBundle\Security\Authentication\Token\CustomToken;
 
+
 class CustomAuthenticationProvider implements  AuthenticationProviderInterface
 {
     /**
@@ -45,16 +46,18 @@ class CustomAuthenticationProvider implements  AuthenticationProviderInterface
      */
     public function authenticate(TokenInterface $token)
     {
+        /** @var $user \UserCredentialsBundle\Entity\User */
+        /** @var $token \UserCredentialsBundle\Security\Authentication\Token\CustomToken */
         $user = $this->userProvider->loadUserByUsername($token->getUsername());
 
-        if($user && $token->getCreatedAt() == 10)
+        if($user && $token->getToken() == $user->getToken())
         {
             $authenticatedToken = new CustomToken($user->getRoles());
             $authenticatedToken->setUser($user);
 
             return $authenticatedToken;
         }
-        throw new AuthenticationException('The WSSE authentication failed.');
+        throw new AuthenticationException('The Custom authentication failed.');
     }
 
     /**

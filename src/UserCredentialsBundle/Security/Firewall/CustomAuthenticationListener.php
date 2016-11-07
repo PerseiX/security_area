@@ -15,6 +15,7 @@ use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterfac
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Firewall\ListenerInterface;
+use Symfony\Component\Validator\Constraints\DateTime;
 use UserCredentialsBundle\Security\Authentication\Token\CustomToken;
 
 class CustomAuthenticationListener implements ListenerInterface
@@ -47,12 +48,16 @@ class CustomAuthenticationListener implements ListenerInterface
     {
         $request = $event->getRequest();
         $username = $request->query->get('username');
+        $requestToken = $request->query->get('token');
 
         $token = new CustomToken();
         if($username){
             $token->setUser($username);
+            $token->setToken($requestToken);
+            $dataTime = new DateTime();
 
-            $token->setCreatedAt(10);
+            $token->setCreatedAt($dataTime->format);
+            $token->setExpirationDate($dataTime->format);
         }
         try{
             $authenticationToken = $this->authenticationManager->authenticate($token);

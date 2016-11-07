@@ -15,14 +15,19 @@ use Symfony\Component\Validator\Constraints\DateTime;
 class CustomToken extends AbstractToken
 {
     /**
-     * @var DateTime
+     * @var String
      */
-    private $createdAt;
+    protected $token;
 
     /**
      * @var DateTime
      */
-    private $expirationDate;
+    protected $createdAt;
+
+    /**
+     * @var DateTime
+     */
+    protected $expirationDate;
 
     /**
      * CustomToken constructor.
@@ -76,6 +81,24 @@ class CustomToken extends AbstractToken
     public function setExpirationDate($expirationDate)
     {
         $this->expirationDate = $expirationDate;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param $token
+     * @return $this
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
         return $this;
     }
 }

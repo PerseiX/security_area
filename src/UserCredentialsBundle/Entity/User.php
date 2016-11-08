@@ -7,9 +7,8 @@
  */
 
 namespace UserCredentialsBundle\Entity;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Doctrine\ORM\Mapping as ORM;
-
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class User
@@ -17,7 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *
  * @ORM\Entity(repositoryClass="UserCredentialsBundle\Entity\UserRepository")
  */
-class User implements UserInterface, \Serializable
+class User implements \Serializable, AdvancedUserInterface
 {
     /**
      * @ORM\Id
@@ -238,5 +237,37 @@ class User implements UserInterface, \Serializable
     {
         $this->token = $token;
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAccountNonExpired()
+    {
+       return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAccountNonLocked()
+    {
+      return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function isEnabled()
+    {
+        return $this->getIsActive();
     }
 }

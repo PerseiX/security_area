@@ -10,7 +10,12 @@ services:
             - '@cache.app'
         public: false
 
+    custom.security.authentication.manager:
+        class: UserCredentialsBundle\Security\Authentication\Manager\CustomAuthenticationManager
+        arguments: ['@custom.security.authentication.provider']
+        public: false
+
     custom.security.authentication.listener:
         class: UserCredentialsBundle\Security\Firewall\CustomAuthenticationListener
-        arguments: ['@security.token_storage', '@security.authentication.manager']
+        arguments: ['@security.token_storage', '@custom.security.authentication.manager']
         public: false

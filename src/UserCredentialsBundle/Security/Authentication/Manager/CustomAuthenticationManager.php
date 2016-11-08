@@ -41,6 +41,11 @@ class CustomAuthenticationManager implements AuthenticationManagerInterface
         }
 
         $newToken = $this->provider->authenticate($token);
+
+        if (!$newToken->getUser()->isEnabled()) {
+            throw new AuthenticationException("The found user is disabled!");
+        }
+
         $newToken->setAuthenticated(true);
 
         return $newToken;

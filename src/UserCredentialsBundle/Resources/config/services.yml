@@ -9,13 +9,18 @@ services:
             - '@app.security.custom_user_provider'
             - '@cache.app'
         public: false
+        
+    custom.security.authentication.checker:
+        class: UserCredentialsBundle\Security\Authentication\Checker\CustomUserChecker
+        public: false
 
     custom.security.authentication.manager:
         class: UserCredentialsBundle\Security\Authentication\Manager\CustomAuthenticationManager
-        arguments: ['@custom.security.authentication.provider']
+        arguments: ['@custom.security.authentication.provider', '@custom.security.authentication.checker']
         public: false
 
     custom.security.authentication.listener:
         class: UserCredentialsBundle\Security\Firewall\CustomAuthenticationListener
         arguments: ['@security.token_storage', '@custom.security.authentication.manager']
         public: false
+

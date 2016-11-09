@@ -12,6 +12,7 @@ namespace UserCredentialsBundle\Security\Authentication\Manager;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use UserCredentialsBundle\Security\Authentication\Checker\CustomUserChecker;
 use UserCredentialsBundle\Security\Authentication\Provider\CustomAuthenticationProvider;
 
 class CustomAuthenticationManager implements AuthenticationManagerInterface
@@ -22,12 +23,18 @@ class CustomAuthenticationManager implements AuthenticationManagerInterface
     private $provider;
 
     /**
+     * @var CustomUserChecker
+     */
+    private $userChecker;
+
+    /**
      * CustomAuthenticationManager constructor.
      * @param CustomAuthenticationProvider $provider
      */
-    public function __construct(CustomAuthenticationProvider $provider)
+    public function __construct(CustomAuthenticationProvider $provider, CustomUserChecker $userChecker)
     {
         $this->provider = $provider;
+        $this->userChecker = $userChecker;
     }
 
     /**
@@ -41,12 +48,9 @@ class CustomAuthenticationManager implements AuthenticationManagerInterface
         }
 
         $newToken = $this->provider->authenticate($token);
-
-        if (!$newToken->getUser()->isEnabled()) {
-            throw new AuthenticationException("The found user is disabled!");
-        }
-
+        $this->userChecker->checkPreAuth($newToken->getUser());
         $newToken->setAuthenticated(true);
+        $this->userChecker->checkPostAuth($newToken->getUser());
 
         return $newToken;
     }

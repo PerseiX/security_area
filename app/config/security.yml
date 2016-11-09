@@ -12,7 +12,7 @@ security:
                 pattern:   ^/
                 stateless: true
                 custom:      true
-
+                user_checker: custom.security.authentication.checker
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
